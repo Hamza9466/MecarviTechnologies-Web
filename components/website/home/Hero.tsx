@@ -27,19 +27,52 @@ export default function Hero() {
       setLoading(true);
       setError("");
 
-      const response = await fetch("http://localhost:8000/api/v1/home-page", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-        },
-      });
+      let response: Response;
+      try {
+        response = await fetch("http://localhost:8000/api/v1/home-page", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+          },
+        });
+      } catch (fetchError: any) {
+        // Network error (backend not reachable, CORS, etc.)
+        console.warn("Cannot connect to API, using default content:", fetchError.message);
+        // Set default data and continue - don't show error to user
+        setData({
+          title: "A Complete\nSoftware Based\nWebsite",
+          buttonText: "Discover More",
+          buttonUrl: "/discover",
+          description: "Integrating and automating workflows simplifies operations, reduces manual effort, and boosts efficiency. Seamless integration connects various.",
+          background_image: null,
+          secondary_image: null,
+        });
+        setLoading(false);
+        return;
+      }
 
       if (!response.ok) {
         throw new Error("Failed to fetch home page data");
       }
 
-      const result = await response.json();
+      let result;
+      try {
+        result = await response.json();
+      } catch (parseError) {
+        console.error("Failed to parse API response:", parseError);
+        // Set default data on parse error
+        setData({
+          title: "A Complete\nSoftware Based\nWebsite",
+          buttonText: "Discover More",
+          buttonUrl: "/discover",
+          description: "Integrating and automating workflows simplifies operations, reduces manual effort, and boosts efficiency. Seamless integration connects various.",
+          background_image: null,
+          secondary_image: null,
+        });
+        setLoading(false);
+        return;
+      }
 
       if (result.success && result.data?.home_page) {
         const homePage = result.data.home_page;
@@ -54,8 +87,7 @@ export default function Hero() {
       }
     } catch (err: any) {
       console.error("Error fetching home page data:", err);
-      setError("Failed to load content");
-      // Set default data on error
+      // Set default data on error - don't show error to user, just use defaults
       setData({
         title: "A Complete\nSoftware Based\nWebsite",
         buttonText: "Discover More",
@@ -84,7 +116,7 @@ export default function Hero() {
 
   return (
     <section 
-      className="min-h-screen  flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-12 pt-20 sm:pt-24 pb-12 sm:pb-16 relative overflow-hidden"
+      className="min-h-screen  flex items-center justify-center px-1 sm:px-2 md:px-4 lg:px-6 pt-20 sm:pt-24 pb-12 sm:pb-16 relative overflow-hidden"
     >
       {/* Background Image or Gradient */}
       {displayData.background_image ? (
@@ -127,17 +159,17 @@ export default function Hero() {
         </svg>
       )}
       
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 md:gap-12 lg:gap-16 items-center w-full mt-8 sm:mt-12 md:mt-16 lg:mt-20 relative z-10">
+      <div className="max-w-[95%] mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-10 items-center w-full mt-12 sm:mt-16 md:mt-20 lg:mt-24 relative z-10">
         {/* Left Content */}
-        <div className="text-white space-y-4 sm:space-y-5 md:space-y-6 text-center md:text-left order-2 md:order-1">
+        <div className="text-white space-y-3 sm:space-y-4 md:space-y-5 lg:space-y-6 text-center md:text-left order-2 md:order-1 px-2 sm:px-0">
           {loading ? (
             <div className="space-y-4">
-              <div className="h-16 bg-white/20 rounded animate-pulse"></div>
-              <div className="h-24 bg-white/20 rounded animate-pulse"></div>
+              <div className="h-12 sm:h-16 bg-white/20 rounded animate-pulse"></div>
+              <div className="h-20 sm:h-24 bg-white/20 rounded animate-pulse"></div>
             </div>
           ) : (
             <>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight text-white">
+              <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight text-white">
                 {titleLines.map((line, index) => (
                   <span key={index}>
                     {line}
@@ -145,7 +177,7 @@ export default function Hero() {
                   </span>
                 ))}
               </h1>
-              <p className="text-base sm:text-lg md:text-xl text-white/90 max-w-xl mx-auto md:mx-0 leading-relaxed">
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 max-w-xl mx-auto md:mx-0 leading-relaxed px-2 sm:px-0">
                 {displayData.description}
               </p>
             </>
@@ -153,7 +185,7 @@ export default function Hero() {
           <div className="flex justify-center md:justify-start pt-2">
             <Link
               href={displayData.buttonUrl || "/discover"}
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-yellow-400 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg hover:from-orange-600 hover:to-yellow-500 transition-all shadow-lg"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-yellow-400 text-white px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 rounded-full font-semibold text-sm sm:text-base md:text-lg hover:from-orange-600 hover:to-yellow-500 transition-all shadow-lg"
             >
               {displayData.buttonText || "Discover More"}
               <svg
@@ -162,7 +194,7 @@ export default function Hero() {
                 viewBox="0 0 24 24"
                 strokeWidth={2.5}
                 stroke="currentColor"
-                className="w-5 h-5"
+                className="w-4 h-4 sm:w-5 sm:h-5"
               >
                 <path
                   strokeLinecap="round"
@@ -175,8 +207,8 @@ export default function Hero() {
         </div>
 
         {/* Right Content - Image in Laptop Frame */}
-        <div className="relative flex items-center justify-center order-1 md:order-2">
-          <div className="relative w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl transform -rotate-3 md:rotate-0 hover:scale-105 transition-transform duration-300">
+        <div className="relative flex items-center justify-center order-1 md:order-2 px-2 sm:px-0 ml-4 sm:ml-6 md:ml-8 lg:ml-15">
+          <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl transform -rotate-3 md:rotate-0 hover:scale-105 transition-transform duration-300">
             {loading ? (
               <div className="relative bg-white rounded-2xl p-3 sm:p-4 shadow-2xl">
                 <div className="bg-gray-100 rounded-lg overflow-hidden aspect-video animate-pulse"></div>

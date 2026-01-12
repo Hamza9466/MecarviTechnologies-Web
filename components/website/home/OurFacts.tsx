@@ -123,22 +123,22 @@ export default function OurFacts() {
       {/* Bottom Section - Background with Overlay Card */}
       <div className="relative w-full">
         {/* Full Width Background */}
-        <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-0 min-h-[400px] md:min-h-[500px] w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-0 min-h-[500px] sm:min-h-[450px] md:min-h-[500px] lg:min-h-[500px] w-full">
         <div style={{ backgroundColor: '#E60F77' }}></div>
         <div style={{ backgroundColor: '#F3F4F6' }}></div>
         </div>
 
         {/* Single White Card Overlay - Constrained */}
-        <div className="absolute inset-0 flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-12">
-          <div className="max-w-7xl w-full h-full relative">
-            <div className="absolute inset-2 md:inset-4 lg:inset-6 bg-white rounded-2xl p-8 md:p-12 lg:p-16 shadow-2xl">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 h-full">
+        <div className="absolute inset-0 flex items-center justify-center px-1 sm:px-2 md:px-4 lg:px-6">
+          <div className="max-w-[95%] w-full h-full relative">
+            <div className="absolute inset-2 md:inset-4 lg:inset-6 bg-white rounded-2xl p-4 sm:p-8 md:p-12 lg:p-16 shadow-2xl overflow-y-auto">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12 h-full">
                 {/* Left Side - Our Promise */}
                 <div className="flex flex-col justify-center">
-                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-4 md:mb-6">
+                  <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-3 sm:mb-4 md:mb-6">
                     Our Promise
                   </h3>
-                  <p className="text-gray-600 text-base md:text-lg leading-relaxed">
+                  <p className="text-gray-600 text-sm sm:text-base md:text-lg leading-relaxed">
                     We help you scale your vision and services through thoughtful
                     planning and consultation.
                   </p>
@@ -149,20 +149,20 @@ export default function OurFacts() {
                   <div className="relative w-full">
                     <div className="flex flex-col gap-2 md:gap-3">
                       {processSteps.map((step, index) => (
-                        <div key={index} className="flex items-start gap-4 py-2">
+                        <div key={index} className="flex items-start gap-3 sm:gap-4 py-1 sm:py-2">
                           {/* Light Pink Circular Number */}
-                          <div className="w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#FEE8F4' }}>
-                            <span className="font-bold text-lg md:text-xl" style={{ color: '#E60F77' }}>
+                          <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#FEE8F4' }}>
+                            <span className="font-bold text-base sm:text-lg md:text-xl" style={{ color: '#E60F77' }}>
                               {step.number}
                             </span>
                           </div>
 
                           {/* Content */}
-                          <div className="flex-1">
-                            <h4 className="text-base md:text-lg font-bold text-gray-900 mb-2">
+                          <div className="flex-1 min-w-0">
+                            <h4 className="text-sm sm:text-base md:text-lg font-bold text-gray-900 mb-1 sm:mb-2">
                               {step.title}
                             </h4>
-                            <p className="text-gray-700 text-sm md:text-base leading-relaxed">
+                            <p className="text-gray-700 text-xs sm:text-sm md:text-base leading-relaxed">
                               {step.description}
                             </p>
                           </div>

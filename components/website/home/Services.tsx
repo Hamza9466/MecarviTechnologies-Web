@@ -46,7 +46,7 @@ export default function Services() {
   ];
 
   return (
-    <section className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 lg:px-12 relative overflow-hidden">
+    <section className="py-16 sm:py-20 md:py-24 px-1 sm:px-2 md:px-4 lg:px-6 relative overflow-hidden">
       {/* Background color section - 400px height at top */}
       <div 
         className="absolute top-0 left-0 w-full pointer-events-none"
@@ -70,7 +70,7 @@ export default function Services() {
         </svg>
       </div>
       
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-[95%] mx-auto relative z-10">
         {/* Section Title */}
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4">

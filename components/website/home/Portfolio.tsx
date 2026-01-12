@@ -6,6 +6,23 @@ import { useState, useEffect } from "react";
 export default function Portfolio() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(true);
+  const [itemsPerView, setItemsPerView] = useState(1);
+
+  // Calculate items per view based on screen size
+  useEffect(() => {
+    const calculateItemsPerView = () => {
+      const width = window.innerWidth;
+      if (width >= 1280) setItemsPerView(6);
+      else if (width >= 1024) setItemsPerView(4);
+      else if (width >= 640) setItemsPerView(3);
+      else if (width >= 384) setItemsPerView(2);
+      else setItemsPerView(1);
+    };
+
+    calculateItemsPerView();
+    window.addEventListener('resize', calculateItemsPerView);
+    return () => window.removeEventListener('resize', calculateItemsPerView);
+  }, []);
 
   const portfolioImages = [
     "/assets/images/49TX8jOWzRs1BMlR1748264596.jpg",
@@ -81,15 +98,15 @@ export default function Portfolio() {
   return (
     <section className="bg-white relative">
       {/* Header Section */}
-      <div className="relative bg-white px-4 sm:px-6 md:px-8 lg:px-12 py-3 md:py-4 lg:py-5">
-        <div className="max-w-7xl mx-auto relative z-10">
+      <div className="relative bg-white px-1 sm:px-2 md:px-4 lg:px-6 py-3 md:py-4 lg:py-5">
+        <div className="max-w-[95%] mx-auto relative z-10 px-2 sm:px-0">
           {/* PORTFOLIO Title */}
-          <h2 className="text-center text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 uppercase mb-2 md:mb-3">
+          <h2 className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 uppercase mb-2 sm:mb-3">
             PORTFOLIO
           </h2>
 
           {/* Description Text */}
-          <p className="text-center text-gray-600 text-sm md:text-base max-w-6xl mx-auto leading-relaxed">
+          <p className="text-center text-gray-600 text-xs sm:text-sm md:text-base max-w-6xl mx-auto leading-relaxed px-2 sm:px-0">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, deserunt sed eligendi velit laboriosam suscipit, quisquam eveniet illo soluta adipisci necessitatibus officia id blanditiis voluptates eos. Ab alias inventore molestiae.
           </p>
         </div>
@@ -100,11 +117,11 @@ export default function Portfolio() {
         {/* Navigation Buttons */}
         <button
           onClick={goToPrevious}
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white text-gray-800 rounded-full p-3 md:p-4 shadow-lg transition-all duration-300 hover:scale-110"
+          className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 sm:p-3 md:p-4 shadow-lg transition-all duration-300 hover:scale-110"
           aria-label="Previous slide"
         >
           <svg
-            className="w-5 h-5 md:w-6 md:h-6"
+            className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -119,11 +136,11 @@ export default function Portfolio() {
         </button>
         <button
           onClick={goToNext}
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white text-gray-800 rounded-full p-3 md:p-4 shadow-lg transition-all duration-300 hover:scale-110"
+          className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 sm:p-3 md:p-4 shadow-lg transition-all duration-300 hover:scale-110"
           aria-label="Next slide"
         >
           <svg
-            className="w-5 h-5 md:w-6 md:h-6"
+            className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -140,14 +157,15 @@ export default function Portfolio() {
         <div
           className="flex"
           style={{
-            transform: `translateX(-${currentIndex * 16.666}%)`,
+            transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)`,
             transition: isTransitioning ? "transform 1000ms ease-in-out" : "none",
           }}
         >
           {duplicatedImages.map((image, index) => (
             <div
               key={index}
-              className="relative w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6 aspect-[3/4] overflow-hidden px-2 flex-shrink-0"
+              className="relative aspect-[3/4] overflow-hidden px-1 sm:px-2 flex-shrink-0"
+              style={{ width: `${100 / itemsPerView}%`, minWidth: `${100 / itemsPerView}%` }}
             >
               <Image
                 src={image}

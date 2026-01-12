@@ -9,6 +9,7 @@ export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,6 +21,11 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    // Close mobile menu when route changes
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 w-full">
       {/* Thin dark gray line at top - hide when scrolled */}
@@ -27,10 +33,10 @@ export default function Header() {
       
       {/* Gradient background */}
       <div 
-        className={`${isScrolled ? "bg-white shadow-md" : ""} py-3 px-4 md:px-8 overflow-visible transition-all duration-1000`}
+        className={`${isScrolled ? "bg-white shadow-md" : ""} py-3 px-1 md:px-2 lg:px-4 overflow-visible transition-all duration-1000`}
         style={!isScrolled ? { background: "linear-gradient(to right, #00C6EC, #0040EA)" } : {}}
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between relative min-h-[63px]">
+        <div className="max-w-[95%] mx-auto flex items-center justify-between relative min-h-[63px]">
           {/* Logo on Left */}
           <Link href="/" className="flex items-center z-10">
             <Image
@@ -38,15 +44,15 @@ export default function Header() {
               alt="Mecarvi Technologies Logo"
               width={130}
               height={120}
-              className="max-h-12 w-auto object-contain"
+              className="max-h-10 sm:max-h-12 w-auto object-contain"
             />
           </Link>
 
-          {/* Centered Navigation Panel */}
-          <nav className={`absolute left-1/2 -translate-x-1/2 top-1/3 -translate-y-1/2 bg-white  rounded-none rounded-bl-2xl rounded-br-2xl px-8 py-8 md:py-10 flex items-center gap-6 z-20 whitespace-nowrap transition-all duration-1000 ${isScrolled ? "shadow-none" : "shadow-lg"}`} style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>
+          {/* Centered Navigation Panel - Hidden on mobile/tablet */}
+          <nav className={`hidden lg:flex absolute left-1/2 -translate-x-1/2 top-1/3 -translate-y-1/2 bg-white rounded-none rounded-bl-2xl rounded-br-2xl px-4 xl:px-8 py-6 xl:py-10 items-center gap-3 xl:gap-6 z-20 whitespace-nowrap transition-all duration-1000 ${isScrolled ? "shadow-none" : "shadow-lg"}`} style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>
             <Link 
               href="/" 
-              className={`text-sm font-medium pt-1 transition-colors whitespace-nowrap ${
+              className={`text-xs xl:text-sm font-medium pt-1 transition-colors whitespace-nowrap ${
                 pathname === "/" ? "text-orange-600 font-semibold" : "text-black hover:text-gray-700"
               }`}
             >
@@ -55,7 +61,7 @@ export default function Header() {
 
             <Link 
               href="/website/pages/about" 
-              className={`text-sm font-medium pt-1 transition-colors whitespace-nowrap ${
+              className={`text-xs xl:text-sm font-medium pt-1 transition-colors whitespace-nowrap ${
                 pathname === "/website/pages/about" ? "text-orange-600 font-semibold" : "text-black hover:text-gray-700"
               }`}
             >
@@ -64,7 +70,7 @@ export default function Header() {
 
             <Link 
               href="/website/pages/faq" 
-              className={`text-sm font-medium pt-1 transition-colors whitespace-nowrap ${
+              className={`text-xs xl:text-sm font-medium pt-1 transition-colors whitespace-nowrap ${
                 pathname === "/website/pages/faq" ? "text-orange-600 font-semibold" : "text-black hover:text-gray-700"
               }`}
             >
@@ -73,7 +79,7 @@ export default function Header() {
 
             <Link 
               href="/website/pages/quote" 
-              className={`text-sm font-medium pt-1 transition-colors whitespace-nowrap ${
+              className={`text-xs xl:text-sm font-medium pt-1 transition-colors whitespace-nowrap ${
                 pathname === "/website/pages/quote" ? "text-orange-600 font-semibold" : "text-black hover:text-gray-700"
               }`}
             >
@@ -82,31 +88,31 @@ export default function Header() {
 
             <Link 
               href="/products" 
-              className={`flex items-center pt-1 gap-1.5 text-sm font-medium transition-colors whitespace-nowrap ${
+              className={`flex items-center pt-1 gap-1 xl:gap-1.5 text-xs xl:text-sm font-medium transition-colors whitespace-nowrap ${
                 pathname?.startsWith("/products") ? "text-orange-600 font-semibold" : "text-black hover:text-gray-700"
               }`}
             >
               Products
-              <svg className={`w-4 h-4 ${pathname?.startsWith("/products") ? "text-orange-600" : "text-black"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className={`w-3 h-3 xl:w-4 xl:h-4 ${pathname?.startsWith("/products") ? "text-orange-600" : "text-black"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
             </Link>
 
             <Link 
               href="/service" 
-              className={`flex items-center pt-1 gap-1.5 text-sm font-medium transition-colors whitespace-nowrap ${
+              className={`flex items-center pt-1 gap-1 xl:gap-1.5 text-xs xl:text-sm font-medium transition-colors whitespace-nowrap ${
                 pathname === "/service" ? "text-orange-600 font-semibold" : "text-black hover:text-gray-700"
               }`}
             >
               Service
-              <svg className={`w-4 h-4 ${pathname === "/service" ? "text-orange-600" : "text-black"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className={`w-3 h-3 xl:w-4 xl:h-4 ${pathname === "/service" ? "text-orange-600" : "text-black"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
             </Link>
           
             <Link 
               href="/technologies" 
-              className={`text-sm font-medium pt-1 transition-colors whitespace-nowrap ${
+              className={`text-xs xl:text-sm font-medium pt-1 transition-colors whitespace-nowrap ${
                 pathname === "/technologies" ? "text-orange-600 font-semibold" : "text-black hover:text-gray-700"
               }`}
             >
@@ -115,7 +121,7 @@ export default function Header() {
 
             <Link 
               href="/website/pages/career" 
-              className={`text-sm font-medium pt-1 transition-colors whitespace-nowrap ${
+              className={`text-xs xl:text-sm font-medium pt-1 transition-colors whitespace-nowrap ${
                 pathname === "/website/pages/career" ? "text-orange-600 font-semibold" : "text-black hover:text-gray-700"
               }`}
             >
@@ -124,7 +130,7 @@ export default function Header() {
          
             <Link 
               href="/contact" 
-              className={`text-sm font-medium pt-1 transition-colors whitespace-nowrap ${
+              className={`text-xs xl:text-sm font-medium pt-1 transition-colors whitespace-nowrap ${
                 pathname === "/contact" ? "text-orange-600 font-semibold" : "text-black hover:text-gray-700"
               }`}
             >
@@ -132,13 +138,111 @@ export default function Header() {
             </Link>
           </nav>
 
+          {/* Mobile Menu Backdrop */}
+          {isMobileMenuOpen && (
+            <div 
+              className="lg:hidden fixed inset-0 bg-black/50 z-40 top-[63px]"
+              onClick={() => setIsMobileMenuOpen(false)}
+            />
+          )}
+
+          {/* Mobile Menu */}
+          {isMobileMenuOpen && (
+            <nav className="lg:hidden absolute top-full left-0 right-0 bg-white shadow-lg z-50 py-4 px-2 border-t">
+              <div className="flex flex-col gap-2 max-h-[80vh] overflow-y-auto">
+                <Link 
+                  href="/" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
+                    pathname === "/" ? "text-orange-600 bg-orange-50 font-semibold" : "text-black hover:bg-gray-100"
+                  }`}
+                >
+                  Home
+                </Link>
+                <Link 
+                  href="/website/pages/about" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
+                    pathname === "/website/pages/about" ? "text-orange-600 bg-orange-50 font-semibold" : "text-black hover:bg-gray-100"
+                  }`}
+                >
+                  About us
+                </Link>
+                <Link 
+                  href="/website/pages/faq" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
+                    pathname === "/website/pages/faq" ? "text-orange-600 bg-orange-50 font-semibold" : "text-black hover:bg-gray-100"
+                  }`}
+                >
+                  FAQ
+                </Link>
+                <Link 
+                  href="/website/pages/quote" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
+                    pathname === "/website/pages/quote" ? "text-orange-600 bg-orange-50 font-semibold" : "text-black hover:bg-gray-100"
+                  }`}
+                >
+                  Quote
+                </Link>
+                <Link 
+                  href="/products" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
+                    pathname?.startsWith("/products") ? "text-orange-600 bg-orange-50 font-semibold" : "text-black hover:bg-gray-100"
+                  }`}
+                >
+                  Products
+                </Link>
+                <Link 
+                  href="/service" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
+                    pathname === "/service" ? "text-orange-600 bg-orange-50 font-semibold" : "text-black hover:bg-gray-100"
+                  }`}
+                >
+                  Service
+                </Link>
+                <Link 
+                  href="/technologies" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
+                    pathname === "/technologies" ? "text-orange-600 bg-orange-50 font-semibold" : "text-black hover:bg-gray-100"
+                  }`}
+                >
+                  Technologies
+                </Link>
+                <Link 
+                  href="/website/pages/career" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
+                    pathname === "/website/pages/career" ? "text-orange-600 bg-orange-50 font-semibold" : "text-black hover:bg-gray-100"
+                  }`}
+                >
+                  Career
+                </Link>
+                <Link 
+                  href="/contact" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
+                    pathname === "/contact" ? "text-orange-600 bg-orange-50 font-semibold" : "text-black hover:bg-gray-100"
+                  }`}
+                >
+                  Contact
+                </Link>
+              </div>
+            </nav>
+          )}
+
           {/* Right Side - CTA Button and Menu Icon */}
-          <div className="flex items-center gap-6 z-10">
-            {/* Try For Free Button */}
-            <button className="hidden md:flex items-center gap-2 bg-gradient-to-r from-orange-500 to-yellow-400 text-white px-6 py-2.5 rounded-full hover:opacity-90 transition-opacity text-sm font-medium">
-              Try For Free
-              <div className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center">
-                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="flex items-center gap-2 sm:gap-4 md:gap-6 z-10">
+            {/* Try For Free Button - Hidden on mobile, visible on tablet+ */}
+            <button className="hidden sm:flex items-center gap-1.5 md:gap-2 bg-gradient-to-r from-orange-500 to-yellow-400 text-white px-3 sm:px-4 md:px-6 py-2 md:py-2.5 rounded-full hover:opacity-90 transition-opacity text-xs sm:text-sm font-medium">
+              <span className="hidden md:inline">Try For Free</span>
+              <span className="md:hidden">Try Free</span>
+              <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-white/20 flex items-center justify-center">
+                <svg className="w-2.5 h-2.5 md:w-3 md:h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </div>
@@ -147,17 +251,21 @@ export default function Header() {
             {/* Login Button */}
             <button 
               onClick={() => router.push("/login")}
-              className="px-4 py-2 rounded-full bg-orange-500 text-white font-medium hover:bg-orange-600 transition-colors ml-2"
+              className="px-5 sm:px-4 py-2.5 sm:py-2 rounded-full bg-orange-500 text-white text-xs sm:text-sm font-medium hover:bg-orange-600 transition-colors min-w-[70px] sm:min-w-auto"
             >
-              Login
+              <span className="hidden sm:inline">Login</span>
+              <span className="sm:hidden">Log</span>
             </button>
 
             {/* Mobile Menu Button */}
-            <button className="lg:hidden w-6 h-6 flex flex-col gap-1.5">
-              <span className="w-full h-0.5 bg-black"></span>
-              <span className="w-full h-0.5 bg-black"></span>
-              <span className="w-full h-0.5 bg-black"></span>
-              <span className="w-full h-0.5 bg-black"></span>
+            <button 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden w-6 h-6 flex flex-col justify-center gap-1.5 relative z-30"
+              aria-label="Toggle mobile menu"
+            >
+              <span className={`w-full h-0.5 bg-current transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`} style={{ color: isScrolled || isMobileMenuOpen ? '#000' : '#fff' }}></span>
+              <span className={`w-full h-0.5 bg-current transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`} style={{ color: isScrolled || isMobileMenuOpen ? '#000' : '#fff' }}></span>
+              <span className={`w-full h-0.5 bg-current transition-all duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} style={{ color: isScrolled || isMobileMenuOpen ? '#000' : '#fff' }}></span>
             </button>
           </div>
         </div>

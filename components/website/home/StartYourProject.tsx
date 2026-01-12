@@ -3,8 +3,8 @@ import Image from "next/image";
 
 export default function StartYourProject() {
   return (
-    <section className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 lg:px-12" style={{ background: 'linear-gradient(to bottom, #1e3a8a, #000000)' }}>
-      <div className="max-w-7xl mx-auto">
+    <section className="py-16 sm:py-20 md:py-24 px-1 sm:px-2 md:px-4 lg:px-6" style={{ background: 'linear-gradient(to bottom, #1e3a8a, #000000)' }}>
+      <div className="max-w-[95%] mx-auto">
         {/* Top Section */}
         <div className="text-center mb-12 md:mb-16">
           {/* Main Heading */}
@@ -18,7 +18,7 @@ export default function StartYourProject() {
           </p>
 
           {/* Descriptive Paragraph */}
-          <div className="max-w-7xl mx-auto text-left mb-8">
+          <div className="max-w-[95%] mx-auto text-left mb-8">
             <p className="text-white text-sm sm:text-base md:text-lg leading-relaxed">
               We're here to help. Take the first step by sharing a few details
               about your project, and We'll provide a tailored estimate that's

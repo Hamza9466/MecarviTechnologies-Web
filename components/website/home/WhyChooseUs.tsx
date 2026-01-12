@@ -59,8 +59,8 @@ export default function WhyChooseUs() {
   ];
 
   return (
-    <section className="bg-white py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 lg:px-12">
-      <div className="max-w-7xl mx-auto">
+    <section className="bg-white py-16 sm:py-20 md:py-24 px-1 sm:px-2 md:px-4 lg:px-6">
+      <div className="max-w-[95%] mx-auto">
         {/* Title - Centered */}
         <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 text-center mb-12 md:mb-16">
           Why Choose Us

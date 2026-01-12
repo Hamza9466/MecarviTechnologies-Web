@@ -29,24 +29,41 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         return;
       }
 
-      // Call logout API
-      const response = await fetch("http://localhost:8000/api/v1/logout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
-      });
+      // Call logout API - handle network errors gracefully
+      try {
+        const response = await fetch("http://localhost:8000/api/v1/logout", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+        });
 
-      const data = await response.json();
-      console.log("Logout response:", data);
+        // Only try to parse JSON if response is ok, otherwise just log
+        if (response.ok) {
+          try {
+            const data = await response.json();
+            console.log("Logout response:", data);
+          } catch (parseError) {
+            // Response might be empty or not JSON, that's okay
+            console.log("Logout successful (no response body)");
+          }
+        } else {
+          // API returned error, but we'll still logout locally
+          console.warn("Logout API returned error, but proceeding with local logout");
+        }
+      } catch (fetchError: any) {
+        // Network error (backend not running, CORS, etc.)
+        // This is fine - we'll still logout locally
+        console.warn("Logout API unavailable, proceeding with local logout:", fetchError.message);
+      }
 
-      // Clear auth data regardless of API response
+      // Clear auth data regardless of API response or network errors
       clearAuthAndRedirect();
     } catch (error) {
       console.error("Logout error:", error);
-      // Even if API call fails, clear local auth and redirect
+      // Even if something unexpected fails, clear local auth and redirect
       clearAuthAndRedirect();
     }
   };
