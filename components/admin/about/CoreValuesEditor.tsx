@@ -259,7 +259,12 @@ export default function CoreValuesEditor() {
                     onChange={(e) =>
                       setEditingValue((prev) => (prev ? { ...prev, title: e.target.value } : null))
                     }
-                    className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+                    className="w-full px-3 py-2 border border-gray-300 rounded text-sm bg-white"
+                    style={{ 
+                      color: '#111827', 
+                      WebkitTextFillColor: '#111827',
+                      caretColor: '#111827'
+                    }}
                   />
                 </div>
                 <div>
@@ -270,7 +275,12 @@ export default function CoreValuesEditor() {
                       setEditingValue((prev) => (prev ? { ...prev, description: e.target.value } : null))
                     }
                     rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+                    className="w-full px-3 py-2 border border-gray-300 rounded text-sm bg-white"
+                    style={{ 
+                      color: '#111827', 
+                      WebkitTextFillColor: '#111827',
+                      caretColor: '#111827'
+                    }}
                   />
                 </div>
                 <div>

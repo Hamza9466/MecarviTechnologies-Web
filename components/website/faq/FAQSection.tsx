@@ -1,40 +1,177 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+interface FAQCategory {
+  id: number;
+  category_name: string;
+  order: number;
+}
+
+interface FAQItem {
+  id: number;
+  faq_category_id: number;
+  question: string;
+  answer: string;
+  order: number;
+}
 
 export default function FAQSection() {
-  const [activeCategory, setActiveCategory] = useState("Inquery");
+  const [categories, setCategories] = useState<FAQCategory[]>([]);
+  const [faqItems, setFaqItems] = useState<FAQItem[]>([]);
+  const [introParagraph, setIntroParagraph] = useState("Find answers to commonly asked questions about our services, products, and processes. If you can't find what you're looking for, feel free to ask us a question using the form below.");
+  const [activeCategory, setActiveCategory] = useState<number | null>(null);
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
   const [showAskQuestion, setShowAskQuestion] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     message: "",
   });
 
-  const categories = ["Inquery", "AboutUs", "ContactUs", "MoreQuestions", "FaqCategory"];
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  const faqs = [
-    {
-      id: 1,
-      question: "What is Flowbite?",
-      answer: "Flowbite is a collection of utility-first CSS components built with Tailwind CSS that you can use to build faster custom layouts and components.",
-    },
-    {
-      id: 2,
-      question: "How can I get started with Flowbite?",
-      answer: "Getting started with Flowbite is easy. You can install it via npm or yarn, or simply include the CSS file in your project. Check out our documentation for detailed instructions.",
-    },
-    {
-      id: 3,
-      question: "What is Tailwind CSS?",
-      answer: "Tailwind CSS is a utility-first CSS framework that provides low-level utility classes to build custom designs without leaving your HTML. It's highly customizable and allows for rapid UI development.",
-    },
-    {
-      id: 4,
-      question: "How do I install Tailwind CSS?",
-      answer: "You can install Tailwind CSS via npm, yarn, or by using the CDN. For the best experience, we recommend using the npm installation method and following the official Tailwind CSS setup guide.",
-    },
-  ];
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      
+      // Fetch all data in parallel
+      const [introRes, categoriesRes, faqItemsRes] = await Promise.allSettled([
+        fetch("http://localhost:8000/api/v1/faq-intro-paragraph", {
+          method: "GET",
+          headers: { Accept: "application/json" },
+        }),
+        fetch("http://localhost:8000/api/v1/faq-categories", {
+          method: "GET",
+          headers: { Accept: "application/json" },
+        }),
+        fetch("http://localhost:8000/api/v1/faq-items", {
+          method: "GET",
+          headers: { Accept: "application/json" },
+        }),
+      ]);
+
+      // Handle Intro Paragraph
+      if (introRes.status === "fulfilled" && introRes.value.ok) {
+        try {
+          const introData = await introRes.value.json();
+          if (introData.success && introData.data?.faq_intro_paragraph?.paragraph_text) {
+            setIntroParagraph(introData.data.faq_intro_paragraph.paragraph_text);
+          }
+        } catch (e) {
+          console.error("Error parsing intro paragraph:", e);
+        }
+      }
+
+      // Handle Categories
+      if (categoriesRes.status === "fulfilled" && categoriesRes.value.ok) {
+        try {
+          const categoriesData = await categoriesRes.value.json();
+          if (categoriesData.success && categoriesData.data) {
+            const cats = Array.isArray(categoriesData.data)
+              ? categoriesData.data
+              : categoriesData.data.faq_categories || [];
+            const sortedCats = cats
+              .map((cat: any) => ({
+                id: cat.id,
+                category_name: cat.category_name || "",
+                order: cat.order || 0,
+              }))
+              .sort((a: FAQCategory, b: FAQCategory) => a.order - b.order);
+            setCategories(sortedCats);
+            // Set first category as active if available
+            if (sortedCats.length > 0 && !activeCategory) {
+              setActiveCategory(sortedCats[0].id);
+            }
+          }
+        } catch (e) {
+          console.error("Error parsing categories:", e);
+        }
+      }
+
+      // Handle FAQ Items
+      if (faqItemsRes.status === "fulfilled" && faqItemsRes.value.ok) {
+        try {
+          const faqItemsData = await faqItemsRes.value.json();
+          if (faqItemsData.success && faqItemsData.data) {
+            const items = Array.isArray(faqItemsData.data)
+              ? faqItemsData.data
+              : faqItemsData.data.faq_items || [];
+            const sortedItems = items
+              .map((item: any) => ({
+                id: item.id,
+                faq_category_id: item.faq_category_id || item.category_id || 0,
+                question: item.question || "",
+                answer: item.answer || "",
+                order: item.order || 0,
+              }))
+              .sort((a: FAQItem, b: FAQItem) => a.order - b.order);
+            setFaqItems(sortedItems);
+          }
+        } catch (e) {
+          console.error("Error parsing FAQ items:", e);
+        }
+      }
+    } catch (err) {
+      console.error("Error fetching FAQ data:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmitQuestion = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitError("");
+    setSubmitSuccess(false);
+    setSubmitting(true);
+
+    try {
+      const response = await fetch("http://localhost:8000/api/v1/user-submitted-questions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          question_message: formData.message.trim(),
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to submit question");
+      }
+
+      if (data.success) {
+        setSubmitSuccess(true);
+        setFormData({ name: "", message: "" });
+        // Reset success message after 3 seconds
+        setTimeout(() => {
+          setSubmitSuccess(false);
+        }, 3000);
+      }
+    } catch (error: any) {
+      setSubmitError(error.message || "Failed to submit question. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  // Filter FAQs by active category
+  const filteredFAQs = activeCategory
+    ? faqItems.filter((faq) => faq.faq_category_id === activeCategory)
+    : faqItems;
+
+  // Split FAQs into two columns
+  const column1FAQs = filteredFAQs.filter((_, index) => index % 2 === 0);
+  const column2FAQs = filteredFAQs.filter((_, index) => index % 2 === 1);
 
   return (
     <section className="bg-white py-8 md:py-12 px-4 sm:px-6 md:px-8 lg:px-12 mr-8 md:mr-12 lg:mr-16">
@@ -52,28 +189,36 @@ export default function FAQSection() {
 
               {/* Navigation Items */}
               <nav className="space-y-2">
-                {categories.map((category) => (
-                  <button
-                    key={category}
-                    onClick={() => {
-                      setActiveCategory(category);
-                      setShowAskQuestion(false);
-                    }}
-                    className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
-                      activeCategory === category && !showAskQuestion
-                        ? "bg-pink-500 text-white font-semibold"
-                        : "text-gray-900 hover:bg-gray-100"
-                    }`}
-                  >
-                    {category}
-                  </button>
-                ))}
+                {loading ? (
+                  <div className="text-center text-gray-500 py-4">Loading categories...</div>
+                ) : categories.length > 0 ? (
+                  <>
+                    {categories.map((category) => (
+                      <button
+                        key={category.id}
+                        onClick={() => {
+                          setActiveCategory(category.id);
+                          setShowAskQuestion(false);
+                        }}
+                        className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
+                          activeCategory === category.id && !showAskQuestion
+                            ? "bg-pink-500 text-white font-semibold"
+                            : "text-gray-900 hover:bg-gray-100"
+                        }`}
+                      >
+                        {category.category_name}
+                      </button>
+                    ))}
+                  </>
+                ) : (
+                  <div className="text-center text-gray-500 py-4 text-sm">No categories available</div>
+                )}
                 
                 {/* Ask Question Button */}
                 <button
                   onClick={() => {
                     setShowAskQuestion(true);
-                    setActiveCategory("");
+                    setActiveCategory(null);
                   }}
                   className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
                     showAskQuestion
@@ -92,21 +237,24 @@ export default function FAQSection() {
             {/* Ask Question Form */}
             {showAskQuestion ? (
               <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 md:p-8">
+                {submitSuccess && (
+                  <div className="mb-4 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+                    Question submitted successfully! We'll get back to you soon.
+                  </div>
+                )}
+                {submitError && (
+                  <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+                    {submitError}
+                  </div>
+                )}
                 <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    // Handle form submission here
-                    console.log("Form submitted:", formData);
-                    // You can add API call here to submit the question
-                    alert("Question submitted successfully!");
-                    setFormData({ name: "", message: "" });
-                  }}
+                  onSubmit={handleSubmitQuestion}
                   className="space-y-6"
                 >
                   {/* Name Field */}
                   <div>
                     <label htmlFor="name" className="block text-sm font-bold text-gray-900 mb-2">
-                      Name
+                      Name <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -122,13 +270,13 @@ export default function FAQSection() {
                   {/* Message Field */}
                   <div>
                     <label htmlFor="message" className="block text-sm font-bold text-gray-900 mb-2">
-                      Message
+                      Question/Message <span className="text-red-500">*</span>
                     </label>
                     <textarea
                       id="message"
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      placeholder="Write your message"
+                      placeholder="Write your question or message"
                       rows={6}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent resize-y"
                       required
@@ -138,9 +286,10 @@ export default function FAQSection() {
                   {/* Submit Button */}
                   <button
                     type="submit"
-                    className="w-full bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
+                    disabled={submitting}
+                    className="w-full bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Ask Question Now
+                    {submitting ? "Submitting..." : "Ask Question Now"}
                   </button>
                 </form>
               </div>
@@ -149,23 +298,28 @@ export default function FAQSection() {
                 {/* Paragraph Text */}
                 <div className="mb-8 md:mb-12">
                   <p className="text-black text-base md:text-lg leading-relaxed text-center font-bold">
-                    Find answers to commonly asked questions about our services, products, and processes. If you can't find what you're looking for, feel free to ask us a question using the form below.
+                    {loading ? "Loading..." : introParagraph}
                   </p>
                 </div>
 
             {/* Grid Layout - 2 columns */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Column 1 */}
-              <div className="relative">
-                {/* Vertical line with circle at top */}
-                <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gray-300">
-                  <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 border-2 border-gray-300 rounded-full bg-white"></div>
-                </div>
-                
-                <div className="space-y-4 pl-12">
-                  {faqs.filter((_, index) => index % 2 === 0).map((faq, idx) => {
-                    const actualIndex = idx * 2;
-                    return (
+            {loading ? (
+              <div className="text-center text-gray-500 py-12">Loading FAQs...</div>
+            ) : filteredFAQs.length === 0 ? (
+              <div className="text-center text-gray-500 py-12">
+                {activeCategory ? "No FAQs found for this category." : "No FAQs available."}
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Column 1 */}
+                <div className="relative">
+                  {/* Vertical line with circle at top */}
+                  <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gray-300">
+                    <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 border-2 border-gray-300 rounded-full bg-white"></div>
+                  </div>
+                  
+                  <div className="space-y-4 pl-12">
+                    {column1FAQs.map((faq) => (
                       <div key={faq.id} className="relative">
                         {/* FAQ Item */}
                         <div className="border-2 border-pink-500 rounded-lg p-4 md:p-6 bg-white hover:shadow-md transition-shadow">
@@ -209,22 +363,19 @@ export default function FAQSection() {
                           )}
                         </div>
                       </div>
-                    );
-                  })}
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              {/* Column 2 */}
-              <div className="relative">
-                {/* Vertical line with circle at top */}
-                <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gray-300">
-                  <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 border-2 border-gray-300 rounded-full bg-white"></div>
-                </div>
-                
-                <div className="space-y-4 pl-12">
-                  {faqs.filter((_, index) => index % 2 === 1).map((faq, idx) => {
-                    const actualIndex = idx * 2 + 1;
-                    return (
+                {/* Column 2 */}
+                <div className="relative">
+                  {/* Vertical line with circle at top */}
+                  <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gray-300">
+                    <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 border-2 border-gray-300 rounded-full bg-white"></div>
+                  </div>
+                  
+                  <div className="space-y-4 pl-12">
+                    {column2FAQs.map((faq) => (
                       <div key={faq.id} className="relative">
                         {/* FAQ Item */}
                         <div className="border-2 border-pink-500 rounded-lg p-4 md:p-6 bg-white hover:shadow-md transition-shadow">
@@ -268,11 +419,11 @@ export default function FAQSection() {
                           )}
                         </div>
                       </div>
-                    );
-                  })}
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
             </div>
             )}
           </div>

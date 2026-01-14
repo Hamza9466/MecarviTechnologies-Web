@@ -84,3 +84,16 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;  /* Chrome, Safari and Opera */
 }
+
+/* Ensure input and textarea text is black in admin panels */
+main input[type="text"],
+main textarea {
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+}
+
+main input[type="text"]:focus,
+main textarea:focus {
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+}
