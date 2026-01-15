@@ -209,8 +209,8 @@ export default function Hero() {
         </div>
 
         {/* Right Content - Image in Laptop Frame */}
-        <div className="relative flex items-center justify-center order-1 md:order-2 px-2 sm:px-0 ml-4 sm:ml-6 md:ml-8 lg:ml-15 w-full md:w-auto" style={{ overflow: 'visible', maxWidth: '100%', flex: '1 1 50%' }}>
-          <div className="relative w-full max-w-3xl sm:max-w-4xl md:max-w-5xl lg:max-w-6xl xl:max-w-7xl transform -rotate-3 md:rotate-0 hover:scale-105 transition-transform duration-300 md:top-[80px]" style={{ marginTop: '2rem', marginBottom: '-4rem' }}>
+        <div className="relative flex items-center justify-center order-1 md:order-2 px-2 sm:px-0 ml-4 sm:ml-6 md:ml-8 lg:ml-15 w-full md:w-auto mb-12 sm:mb-0" style={{ overflow: 'visible', maxWidth: '100%', flex: '1 1 50%' }}>
+          <div className="relative w-full max-w-[320px] sm:max-w-4xl md:max-w-6xl lg:max-w-7xl xl:max-w-[90rem] transform scale-75 sm:scale-100 -rotate-3 md:rotate-0 hover:scale-105 transition-transform duration-300 md:top-[80px] mt-0 sm:mt-8" style={{ marginBottom: '-4rem' }}>
             {loading ? (
               <div className="relative bg-white rounded-2xl p-3 sm:p-4" style={{ boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)' }}>
                 <div className="bg-gray-100 rounded-lg overflow-hidden aspect-video animate-pulse"></div>
@@ -235,7 +235,7 @@ export default function Hero() {
                       alt="Software dashboard illustration"
                       width={1000}
                       height={600}
-                      className="w-full h-full object-cover rounded-lg"
+                      className="w-full h-full object-cover rounded-lg "
                       style={{ height: '100%', width: '100%', objectFit: 'cover' }}
                       priority
                     />

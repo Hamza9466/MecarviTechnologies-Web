@@ -137,7 +137,7 @@ export default function WhyChooseUs() {
 
   if (loading) {
     return (
-      <section className="bg-white py-16 sm:py-20 md:py-24 px-1 sm:px-2 md:px-4 lg:px-6">
+      <section className="bg-white pt-16 sm:pt-20 md:pt-24 pb-0 px-1 sm:px-2 md:px-4 lg:px-6">
         <div className="max-w-[95%] mx-auto">
           <div className="flex justify-center items-center py-12">
             <div className="text-gray-600">Loading...</div>
@@ -149,7 +149,7 @@ export default function WhyChooseUs() {
 
   return (
     <section 
-      className="bg-white py-16 sm:py-20 md:py-24 px-1 sm:px-2 md:px-4 lg:px-6"
+      className="bg-white pt-16 sm:pt-20 md:pt-24 pb-10 px-1 sm:px-2 md:px-4 lg:px-6"
       style={backgroundImageUrl ? {
         backgroundImage: `url(${backgroundImageUrl})`,
         backgroundSize: 'cover',

@@ -237,7 +237,7 @@ export default function OurFacts() {
 
   return (
     <section
-      className="bg-white py-8 sm:py-10 md:py-12"
+      className="bg-white pt-0 pb-8 sm:pb-10 md:pb-12"
       style={
         backgroundImageUrl
           ? {
@@ -285,7 +285,7 @@ export default function OurFacts() {
                 
                 return (
                   <div key={fact.id} className="relative flex-shrink-0 flex flex-col items-center">
-                    <div className="w-36 h-36 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 relative">
+                    <div className="w-36 h-36 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 xl:w-56 xl:h-56 2xl:w-[28rem] 2xl:h-[28rem] relative">
                       {/* Circle Background */}
                       <svg
                         className="w-full h-full transform -rotate-90"
@@ -317,14 +317,14 @@ export default function OurFacts() {
                       </svg>
                       {/* Percentage Text - Centered */}
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="text-3xl md:text-4xl lg:text-5xl font-bold text-black">
+                        <div className="text-3xl md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-9xl font-bold text-black">
                           {displayPercentage}
                         </div>
                       </div>
                     </div>
                     {/* Label - Below Circle */}
                     <div className="text-center mt-3">
-                      <p className="text-sm md:text-base text-gray-600 font-medium">
+                      <p className="text-sm md:text-base lg:text-base xl:text-base 2xl:text-3xl text-gray-600 font-medium">
                         {fact.label}
                       </p>
                     </div>
@@ -348,10 +348,10 @@ export default function OurFacts() {
         </div>
 
         {/* Single White Card Overlay - Constrained */}
-        <div className="absolute inset-0 flex items-center justify-center px-1 sm:px-2 md:px-4 lg:px-6">
-          <div className="max-w-[95%] w-full h-full relative">
-            <div className="absolute inset-2 md:inset-4 lg:inset-6 bg-white rounded-2xl p-4 sm:p-8 md:p-12 lg:p-16 shadow-2xl overflow-y-auto">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12 h-full">
+        <div className="absolute inset-0 flex items-center justify-center px-1 sm:px-2 md:px-4 lg:px-6 py-4 sm:py-6 md:py-8">
+          <div className="max-w-[95%] w-full relative">
+            <div className="bg-white rounded-2xl p-4 sm:p-8 md:p-12 lg:p-16 shadow-2xl">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12">
                 {/* Left Side - Our Promise */}
                 <div className="flex flex-col justify-center">
                   <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-3 sm:mb-4 md:mb-6">
@@ -363,7 +363,7 @@ export default function OurFacts() {
                 </div>
 
                 {/* Right Side - Process Steps */}
-                <div className="flex flex-col justify-center w-full">
+                <div className="flex flex-col w-full">
                   <div className="relative w-full">
                     <div className="flex flex-col gap-2 md:gap-3">
                       {processSteps.length > 0 ? (

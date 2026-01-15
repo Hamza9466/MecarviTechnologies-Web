@@ -196,7 +196,7 @@ export default function Testimonials() {
 
   if (loading) {
     return (
-      <section className="bg-white py-8 sm:py-10 md:py-12 px-1 sm:px-2 md:px-4 lg:px-6">
+      <section className="bg-white pt-0 pb-4 sm:pb-6 md:pb-8 px-1 sm:px-2 md:px-4 lg:px-6">
         <div className="flex justify-center items-center py-12">
           <div className="text-gray-600">Loading...</div>
         </div>
@@ -216,10 +216,10 @@ export default function Testimonials() {
   const nextReview = reviews[nextReviewIndex];
 
   return (
-    <section className="bg-white py-8 sm:py-10 md:py-12 px-1 sm:px-2 md:px-4 lg:px-6">
+    <section className="bg-white pt-0 pb-4 sm:pb-6 md:pb-8 px-1 sm:px-2 md:px-4 lg:px-6">
       <div className="max-w-[95%] mx-auto">
         {/* Header Section */}
-        <div className="text-center mb-12 md:mb-16">
+        <div className="text-center mb-7">
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-wide" style={{ color: '#E60F77' }}>
             {mainHeading}
           </h2>

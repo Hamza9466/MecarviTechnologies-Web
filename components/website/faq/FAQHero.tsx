@@ -31,9 +31,9 @@ export default function FAQHero() {
   }, []);
 
   return (
-    <section className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 lg:px-12 relative overflow-hidden min-h-[500px] sm:min-h-[600px] md:min-h-[400px] bg-white">
+    <section className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 lg:px-12 relative overflow-hidden min-h-[400px] sm:min-h-[500px] md:min-h-[400px] bg-white">
       {/* Background with curve */}
-      <div className="absolute top-0 right-0 w-full h-full" style={{ overflow: 'hidden' }}>
+      <div className="absolute top-0 right-0 w-full h-full overflow-hidden">
         <svg viewBox="0 0 1440 800" className="w-full h-full" preserveAspectRatio="none" style={{ display: 'block' }}>
           <defs>
             <linearGradient id="curveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -46,13 +46,14 @@ export default function FAQHero() {
             fill="url(#curveGradient)"
             stroke="none"
             vectorEffect="non-scaling-stroke"
+            className="w-full h-full"
           />
         </svg>
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10 pt-8 md:pt-12 flex flex-col items-center justify-center">
+      <div className="max-w-7xl mx-auto relative z-10 pt-12 sm:pt-8 md:pt-12 flex flex-col items-center justify-center">
         {/* Main Title */}
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 text-center w-full">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 text-center w-full pt-16 sm:pt-12 md:pt-16">
           {loading ? "Loading..." : heroTitle}
         </h1>
       </div>
