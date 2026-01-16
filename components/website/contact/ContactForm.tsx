@@ -44,7 +44,7 @@ export default function ContactForm() {
                   {/* Box 1 - Call Us */}
                   <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200" style={{width: '300px', height: '120px'}}>
                     <div className="flex items-center space-x-3">
-                      <div className="w-12 h-12 bg-[#F9EFFF] rounded-full flex items-center justify-center flex-shrink-0">
+                      <div className="w-12 h-12 bg-[#F9EFFF] rounded-full flex items-center justify-center flex-shrink-0" style={{width: '50px', height: '50px', transform: 'rotate(0deg)', opacity: 1, top: '1039px', left: '90px', borderRadius: '6px', background: '#F9EFFF', boxShadow: '0px 4px 8px 0px #00000026'}}>
                         <Image
                           src="/assets/images/Vector36.png"
                           alt="Call Us"
@@ -54,9 +54,9 @@ export default function ContactForm() {
                         />
                       </div>
                       <div>
-                        <h4 className="text-gray-900 font-bold text-sm mb-1">Call Us</h4>
-                        <p className="text-gray-900 font-semibold text-xs">+1 234 567 890</p>
-                        <p className="text-gray-900 font-semibold text-xs">+1 987 654 321</p>
+                        <h4 className="text-gray-900 font-bold text-sm mb-3" style={{fontFamily: 'Montserrat', fontWeight: 600, fontStyle: 'Semi Bold', fontSize: '20px', lineHeight: '100%', letterSpacing: '0%'}}>Call Us</h4>
+                        <p className="text-gray-900 font-semibold text-xs" style={{fontFamily: 'Montserrat', fontWeight: 400, fontStyle: 'Regular', fontSize: '15px', lineHeight: '20px', letterSpacing: '0%', color: '#8A8A8A'}}>+1 234 567 890</p>
+                        <p className="text-gray-900 font-semibold text-xs" style={{fontFamily: 'Montserrat', fontWeight: 400, fontStyle: 'Regular', fontSize: '15px', lineHeight: '20px', letterSpacing: '0%', color: '#8A8A8A'}}>+1 987 654 321</p>
                       </div>
                     </div>
                   </div>
@@ -64,7 +64,7 @@ export default function ContactForm() {
                   {/* Box 2 - Fax */}
                   <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200" style={{width: '300px', height: '120px'}}>
                     <div className="flex items-center space-x-3">
-                      <div className="w-12 h-12 bg-[#F9EFFF] rounded-full flex items-center justify-center flex-shrink-0">
+                      <div className="w-12 h-12 bg-[#F9EFFF] rounded-full flex items-center justify-center flex-shrink-0" style={{width: '50px', height: '50px', transform: 'rotate(0deg)', opacity: 1, top: '1039px', left: '90px', borderRadius: '6px', background: '#F9EFFF', boxShadow: '0px 4px 8px 0px #00000026'}}>
                         <Image
                           src="/assets/images/Vector34.png"
                           alt="Fax"
@@ -74,8 +74,8 @@ export default function ContactForm() {
                         />
                       </div>
                       <div className="flex-1">
-                        <h4 className="text-gray-900 font-bold text-sm mb-1">Fax</h4>
-                        <p className="text-gray-900 font-semibold text-xs">1-770-347-7149</p>
+                        <h4 className="text-gray-900 font-bold text-sm mb-3" style={{fontFamily: 'Montserrat', fontWeight: 600, fontStyle: 'Semi Bold', fontSize: '20px', lineHeight: '100%', letterSpacing: '0%'}}>Fax</h4>
+                        <p className="text-gray-900 font-semibold text-xs" style={{fontFamily: 'Montserrat', fontWeight: 400, fontStyle: 'Regular', fontSize: '15px', lineHeight: '20px', letterSpacing: '0%', color: '#8A8A8A'}}>1-770-347-7149</p>
                       </div>
                     </div>
                   </div>
@@ -85,7 +85,7 @@ export default function ContactForm() {
                   {/* Box 3 - Email */}
                   <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200" style={{width: '300px', height: '120px'}}>
                     <div className="flex items-center space-x-3">
-                      <div className="w-12 h-12 bg-[#F9EFFF] rounded-full flex items-center justify-center flex-shrink-0">
+                      <div className="w-12 h-12 bg-[#F9EFFF] rounded-full flex items-center justify-center flex-shrink-0" style={{width: '50px', height: '50px', transform: 'rotate(0deg)', opacity: 1, top: '1039px', left: '90px', borderRadius: '6px', background: '#F9EFFF', boxShadow: '0px 4px 8px 0px #00000026'}}>
                         <Image
                           src="/assets/images/Group-2101.png"
                           alt="Email Us"
@@ -95,16 +95,16 @@ export default function ContactForm() {
                         />
                       </div>
                       <div className="flex-1">
-                        <h4 className="text-gray-900 font-bold text-sm mb-1">Email Us</h4>
-                        <p className="text-gray-900 font-semibold text-xs">contact@mecarvi.com</p>
+                        <h4 className="text-gray-900 font-bold text-sm mb-3" style={{fontFamily: 'Montserrat', fontWeight: 600, fontStyle: 'Semi Bold', fontSize: '20px', lineHeight: '100%', letterSpacing: '0%'}}>Email Us</h4>
+                        <p className="text-gray-900 font-semibold text-xs" style={{fontFamily: 'Montserrat', fontWeight: 400, fontStyle: 'Regular', fontSize: '15px', lineHeight: '20px', letterSpacing: '0%', color: '#8A8A8A'}}>contact@mecarvi.com</p>
                       </div>
                     </div>
                   </div>
                   
                   {/* Box 4 - Address */}
                   <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200" style={{width: '300px', height: '120px'}}>
-                    <div className="flex items-start space-x-3">
-                      <div className="w-12 h-12 bg-[#F9EFFF] rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-12 h-12 bg-[#F9EFFF] rounded-full flex items-center justify-center flex-shrink-0" style={{width: '50px', height: '50px', transform: 'rotate(0deg)', opacity: 1, top: '1039px', left: '90px', borderRadius: '6px', background: '#F9EFFF', boxShadow: '0px 4px 8px 0px #00000026'}}>
                         <Image
                           src="/assets/images/Vector35.png"
                           alt="Visit Us"
@@ -114,9 +114,9 @@ export default function ContactForm() {
                         />
                       </div>
                       <div className="flex-1">
-                        <h4 className="text-gray-900 font-bold text-sm mb-1">Address</h4>
-                        <p className="text-gray-900 font-semibold text-xs">123 Main St, City</p>
-                        <p className="text-gray-900 font-semibold text-xs">State 12345, Country</p>
+                        <h4 className="text-gray-900 font-bold text-sm mb-3" style={{fontFamily: 'Montserrat', fontWeight: 600, fontStyle: 'Semi Bold', fontSize: '20px', lineHeight: '100%', letterSpacing: '0%'}}>Address</h4>
+                        <p className="text-gray-900 font-semibold text-xs" style={{fontFamily: 'Montserrat', fontWeight: 400, fontStyle: 'Regular', fontSize: '15px', lineHeight: '20px', letterSpacing: '0%', color: '#8A8A8A'}}>123 Main St, City</p>
+                        <p className="text-gray-900 font-semibold text-xs" style={{fontFamily: 'Montserrat', fontWeight: 400, fontStyle: 'Regular', fontSize: '15px', lineHeight: '20px', letterSpacing: '0%', color: '#8A8A8A'}}>State 12345, Country</p>
                       </div>
                     </div>
                   </div>
@@ -124,9 +124,9 @@ export default function ContactForm() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Box 5 - Store Hours */}
-                  <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200" style={{width: '300px', height: '120px'}}>
+                  <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200" style={{width: '300px', height: '170px'}}>
                     <div className="flex items-center space-x-3">
-                      <div className="w-12 h-12 bg-[#F9EFFF] rounded-full flex items-center justify-center flex-shrink-0">
+                      <div className="w-12 h-12 bg-[#F9EFFF] rounded-full flex items-center justify-center flex-shrink-0" style={{width: '50px', height: '50px', transform: 'rotate(0deg)', opacity: 1, top: '1039px', left: '90px', borderRadius: '6px', background: '#F9EFFF', boxShadow: '0px 4px 8px 0px #00000026'}}>
                         <Image
                           src="/assets/images/Vector36.png"
                           alt="Store Opening Hours"
@@ -136,8 +136,8 @@ export default function ContactForm() {
                         />
                       </div>
                       <div>
-                        <h4 className="text-gray-900 font-bold text-sm mb-1">Store Opening Hours</h4>
-                        <p className="text-gray-900 font-semibold text-xs">Monday-Friday: 9am - 5pm EST
+                        <h4 className="text-gray-900 font-bold text-sm mb-3" style={{fontFamily: 'Montserrat', fontWeight: 600, fontStyle: 'Semi Bold', fontSize: '20px', lineHeight: '100%', letterSpacing: '0%'}}>Store Opening Hours</h4>
+                        <p className="text-gray-900 font-semibold text-xs" style={{fontFamily: 'Montserrat', fontWeight: 400, fontStyle: 'Regular', fontSize: '15px', lineHeight: '20px', letterSpacing: '0%', color: '#8A8A8A'}}>Monday-Friday: 9am - 5pm EST
 Saturday: CLOSED
 Sunday: CLOSED
 Public Holidays: CLOSED</p>
@@ -146,9 +146,9 @@ Public Holidays: CLOSED</p>
                   </div>
                   
                   {/* Box 6 - Online Hours */}
-                  <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200" style={{width: '300px', height: '120px'}}>
+                  <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200" style={{width: '300px', height: '170px'}}>
                     <div className="flex items-center space-x-3">
-                      <div className="w-12 h-12 bg-[#F9EFFF] rounded-full flex items-center justify-center flex-shrink-0">
+                      <div className="w-12 h-12 bg-[#F9EFFF] rounded-full flex items-center justify-center flex-shrink-0" style={{width: '50px', height: '50px', transform: 'rotate(0deg)', opacity: 1, top: '1039px', left: '90px', borderRadius: '6px', background: '#F9EFFF', boxShadow: '0px 4px 8px 0px #00000026'}}>
                         <Image
                           src="/assets/images/Vector33.png"
                           alt="Online Opening Hours"
@@ -158,8 +158,8 @@ Public Holidays: CLOSED</p>
                         />
                       </div>
                       <div>
-                        <h4 className="text-gray-900 font-bold text-sm mb-1">Online Opening Hours</h4>
-                        <p className="text-gray-900 font-semibold text-xs">Monday-Friday: 8am - 8pm EST
+                        <h4 className="text-gray-900 font-bold text-sm mb-3" style={{fontFamily: 'Montserrat', fontWeight: 600, fontStyle: 'Semi Bold', fontSize: '20px', lineHeight: '100%', letterSpacing: '0%'}}>Online Opening Hours</h4>
+                        <p className="text-gray-900 font-semibold text-xs" style={{fontFamily: 'Montserrat', fontWeight: 400, fontStyle: 'Regular', fontSize: '15px', lineHeight: '20px', letterSpacing: '0%', color: '#8A8A8A'}}>Monday-Friday: 8am - 8pm EST
 Saturday: 11am-5pm EST
 Sunday: CLOSED
 Public Holidays: CLOSED </p>
@@ -171,7 +171,7 @@ Public Holidays: CLOSED </p>
             </div>
 
             {/* Right Column - Contact Form */}
-            <div className="bg-gray-50 rounded-lg p-2 md:p-3 lg:p-4 mb-7">
+            <div className="bg-gray-50 rounded-lg p-2 md:p-3 lg:p-4" style={{height: '500px'}}>
               <h2 className="text-gray-900 text-3xl sm:text-4xl md:text-5xl font-bold mb-6">
                 Contact Form
               </h2>
